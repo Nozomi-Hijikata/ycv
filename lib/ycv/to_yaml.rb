@@ -7,26 +7,45 @@ require "active_support/all"
 
 module Ycv
   class ToYaml
-    def self.convert_to_fixtures(file_path)
-      file_name = file_path[/(\w+).csv$/, 1]
+    def self.call(file_path)
+      file_name = extract_file_name(file_path)
       fixtures_section_name = file_name.singularize
+      fixtures = process_csv_rows(file_path, fixtures_section_name)
+      ToFile.call(convert_to_yaml(fixtures), "#{file_name}.yml")
+    end
+
+    def self.extract_file_name(file_path)
+      file_path[/(\w+).csv$/, 1]
+    end
+
+    def self.process_csv_rows(file_path, section_name)
       fixtures = {}
-
       CSV.foreach(file_path, headers: true) do |row|
-        fixtures["#{fixtures_section_name}_#{row[0]}"] = row.to_hash.map do |k, v|
-          next [k, v] if v.nil?
-
-          value = if v.match(/\A\d*\.\d*\Z/) # 小数点を考慮
-                    v.to_f
-                  elsif v.match(/\A\d+\Z/) # 整数の場合
-                    v.to_i
-                  else
-                    v
-                  end
-          [k, value]
-        end.to_h
+        key = "#{section_name}_#{row[0]}"
+        fixtures[key] = process_row(row)
       end
-      write_to_file(fixtures.to_yaml.sub(/---\n/, ""), "#{file_name}.yml")
+      fixtures
+    end
+
+    def self.process_row(row)
+      row.to_hash.transform_values do |value|
+        parse_value(value)
+      end
+    end
+
+    def self.parse_value(value)
+      case value
+      when /\A\d*\.\d*\Z/ then value.to_f
+      when /\A\d+\Z/ then value.to_i
+      else value
+      end
+    end
+
+    def self.convert_to_yaml(data)
+      yaml_content = data.to_yaml
+      yaml_content.gsub!(/'([^']*)'/, '\1')
+      yaml_content.sub!(/---\n/, "")
+      yaml_content
     end
   end
 end
