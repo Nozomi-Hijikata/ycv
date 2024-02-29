@@ -57,12 +57,12 @@ RSpec.describe Ycv::ToYaml do
           id: 1
           name: Sample Name 1
           status: Active
-          time_stamp: 2023-01-01 10:00:00
+          time_stamp: '2023-01-01 10:00:00'
         sample_2:
           id: 2
           name: Sample Name 2
           status: Inactive
-          time_stamp: 2023-01-02 11:00:00
+          time_stamp: '2023-01-02 11:00:00'
       YAML
     end
 
