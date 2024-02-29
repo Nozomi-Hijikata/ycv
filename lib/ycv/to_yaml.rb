@@ -42,7 +42,6 @@ module Ycv
 
     def self.convert_to_yaml(data)
       yaml_content = data.to_yaml
-      yaml_content.gsub!(/'([^']*)'/, '\1')
       yaml_content.sub!(/---\n/, "")
       yaml_content
     end
