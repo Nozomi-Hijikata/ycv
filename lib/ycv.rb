@@ -8,12 +8,12 @@ require_relative "ycv/to_file"
 module Ycv
   class Error < StandardError; end
 
-  def self.convert(input_path, output_path, format)
+  def self.convert(input_path, format)
     case format
     when :csv
-      Ycv::ToCsv.convert(input_path, output_path)
+      Ycv::ToCsv.call(input_path)
     when :yaml
-      Ycv::ToYaml.convert(input_path, output_path)
+      Ycv::ToYaml.call(input_path)
     else
       raise Error, "Unsupported format: #{format}"
     end

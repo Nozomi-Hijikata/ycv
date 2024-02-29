@@ -19,14 +19,13 @@ RSpec.describe Ycv::ToCsv do
 
     before do
       allow(YAML).to receive(:load_file).with(file_path).and_return(fixtures)
-      allow(Ycv::ToFile).to receive(:call)
     end
 
-    it "converts YAML fixtures to CSV and writes to a file" do
-      described_class.call(file_path)
+    it "converts YAML fixtures to CSV" do
+      result = described_class.call(file_path)
 
       expect(YAML).to have_received(:load_file).with(file_path)
-      expect(Ycv::ToFile).to have_received(:call).with(expected_csv, "#{file_name}.csv")
+      expect(result).to eq(expected_csv)
     end
   end
 end

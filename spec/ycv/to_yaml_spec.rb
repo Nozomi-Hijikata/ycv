@@ -66,13 +66,9 @@ RSpec.describe Ycv::ToYaml do
       YAML
     end
 
-    before do
-      allow(Ycv::ToFile).to receive(:call)
-      described_class.call(csv_path)
-    end
-
     it "processes CSV file and generates expected YAML content" do
-      expect(Ycv::ToFile).to have_received(:call).with(expected_yaml_content, yaml_path)
+      result = described_class.call(csv_path)
+      expect(result).to eq(expected_yaml_content)
     end
   end
 end

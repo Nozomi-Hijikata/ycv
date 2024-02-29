@@ -2,7 +2,6 @@
 
 require "csv"
 require "yaml"
-require_relative "to_file"
 require "active_support/all"
 
 module Ycv
@@ -11,7 +10,7 @@ module Ycv
       file_name = extract_file_name(file_path)
       fixtures_section_name = file_name.singularize
       fixtures = process_csv_rows(file_path, fixtures_section_name)
-      ToFile.call(convert_to_yaml(fixtures), "#{file_name}.yml")
+      convert_to_yaml(fixtures)
     end
 
     def self.extract_file_name(file_path)
