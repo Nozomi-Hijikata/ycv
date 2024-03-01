@@ -22,6 +22,7 @@ gem install ycv
 ```
 
 # Usage
+
 ## Command-Line Interface (CLI)
 The ycv command-line tool is straightforward to use and supports output to both files and standard output (STDOUT), making it versatile for scripting and piping to other commands.
 
@@ -54,6 +55,52 @@ This feature allows you to easily integrate ycv into your command-line workflows
 ## As a Ruby Library
 In addition to the CLI, Ycv can be used as a library within Ruby applications.
 
+## Sample Conversion
+This section provides a simple example of converting between CSV and YAML formats using the ycv tool.
+
+### YAML to CSV Conversion
+Given a YAML file sample.yml with the following content:
+
+```yml
+sample_1:
+  id: 1
+  name: Alice
+  age: 30
+  
+sample_2:
+  id: 2
+  name: Bob
+  age: 25
+```
+Running `ycv sample.yml sample.csv` will produce a CSV file sample.csv with the following content:
+```csv
+id,name,age
+1,Alice,30
+2,Bob,25
+```
+
+
+### CSV to YAML Conversion
+Conversely, given a CSV file sample.csv with the following content:
+```csv
+id,name,age
+1,Alice,30
+2,Bob,25
+```
+
+Running `ycv sample.csv sample.yml` will produce a YAML file sample.yml with the following content:
+```yml
+sample_1:
+  id: 1
+  name: Alice
+  age: 30
+  
+sample_2:
+  id: 2
+  name: Bob
+  age: 25
+```
+These examples demonstrate the straightforward conversion process between CSV and YAML formats, making it easy to integrate ycv into your data handling workflows.
 
 # Contributing
 Contributions to Ycv are always welcome, whether it's through bug reports, pull requests, or feature requests. 
