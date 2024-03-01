@@ -1,5 +1,7 @@
 AllCops:
   TargetRubyVersion: 3.0
+  DefaultFormatter: simple
+  NewCops: disable
 
 Style/StringLiterals:
   Enabled: true
@@ -11,6 +13,8 @@ Style/StringLiteralsInInterpolation:
 
 Layout/LineLength:
   Max: 120
+  Exclude:
+    - '*.gemspec'
 
 Metrics/BlockLength:
   Max: 50
